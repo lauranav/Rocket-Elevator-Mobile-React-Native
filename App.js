@@ -1,57 +1,25 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
-export default function App() {
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from './src/screens/Login';
+import Home from './src/screens/Home';
 
-  const [email, SetEmail] = useState(null)
-  const [password, SetPassword = {}] = useState(null)
-  const entrar = () => {
-    console.log("entrou")
-    console.log(email)
-    console.log(password)
-  }
+const Stack = createStackNavigator();
 
+function MyStack() {
   return (
-    <View style={styles.container}>
-      <Text h3>LOG IN</Text>
-      <Input
-        placeholder="E-mail"
-        leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-        onChangeText={value => SetEmail(value)}
-        keyboardType="email-address"
-      />
-      <Input
-        placeholder="Password"
-        leftIcon={{ type: 'font-awesome', name: 'lock' }}
-        onChangeText={value => SetPassword(value)}
-        secureTextEntry={true}
-      />
-
-      <Button
-        title="LOG IN"
-        onPress={() => entrar()}
-        buttonStyle={{
-          backgroundColor: 'black',
-          borderWidth: 2,
-          borderColor: 'white',
-          borderRadius: 30,
-        }}
-        containerStyle={{
-          width: 200,
-          marginHorizontal: 50,
-          marginVertical: 10,
-        }}
-        titleStyle={{ fontWeight: 'bold' }}
-      />
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyStack />
+    </NavigationContainer>
+  );
+}
