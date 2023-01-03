@@ -3,24 +3,19 @@ import { StyleSheet, View } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
 
 
-export default function Login({ navigation }) {
+export default function Checkin({ navigation }) {
 
     const [email, SetEmail] = useState(null)
     const [password, SetPassword = {}] = useState(null)
-    const entrar = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: "Home" }]
-        })
-    }
 
-    const register = () => {
-        navigation.navigate("Checkin")
+
+    const save = () => {
+        console.log("salvou registro")
     }
 
     return (
         <View style={styles.container}>
-            <Text h3>LOG IN</Text>
+            <Text h3>REGISTER</Text>
             <Input
                 placeholder="E-mail"
                 leftIcon={{ type: 'font-awesome', name: 'envelope' }}
@@ -35,25 +30,8 @@ export default function Login({ navigation }) {
             />
 
             <Button
-                title="LOG IN"
-                onPress={() => entrar()}
-                buttonStyle={{
-                    backgroundColor: 'black',
-                    borderWidth: 2,
-                    borderColor: 'white',
-                    borderRadius: 30,
-                }}
-                containerStyle={{
-                    width: 200,
-                    marginHorizontal: 50,
-                    marginVertical: 10,
-                }}
-                titleStyle={{ fontWeight: 'bold' }}
-            />
-
-            <Button
-                title="REGISTER"
-                onPress={() => register()}
+                title="SAVE"
+                onPress={() => save()}
                 buttonStyle={{
                     backgroundColor: 'black',
                     borderWidth: 2,
