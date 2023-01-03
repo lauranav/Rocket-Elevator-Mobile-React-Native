@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image, useWindowDimensions } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
+import Logo from '../../assets/images/logo.jpg'
 
 
 export default function Login({ navigation }) {
@@ -18,8 +19,13 @@ export default function Login({ navigation }) {
         navigation.navigate("Checkin")
     }
 
+    const { height } = useWindowDimensions();
+
     return (
         <View style={styles.container}>
+
+            <Image source={Logo} style={[styles.logo, { height: height * 0.3 }]} resizeMode="contain"></Image>
+
             <Text h3>LOG IN</Text>
             <Input
                 placeholder="E-mail"
@@ -78,4 +84,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
+    logo: {
+        width: '70%',
+        maxWidth: 300,
+        maxHeight: 180,
+    }
 });
