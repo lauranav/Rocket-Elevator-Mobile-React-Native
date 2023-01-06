@@ -9,12 +9,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home({ navigation }) {
 
-    useEffect(() => {
-        const focusHandler = navigation.addListener('focus', () => {
-            getElevators();
-        });
-        return focusHandler;
-    }, [navigation]);
 
     useFocusEffect(
         React.useCallback(() => {
