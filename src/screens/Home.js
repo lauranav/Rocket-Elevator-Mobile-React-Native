@@ -22,7 +22,7 @@ export default function Home({ navigation }) {
 
         try {
             const res = await axios.get(
-                "https://4a00-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
+                "https://60c0-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
                 {
                     headers: { "Content-Type": "application/json" },
                 }
@@ -91,7 +91,7 @@ export default function Home({ navigation }) {
     return (
 
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Elevators not operation:</Text>
+            <Text style={styles.title}>Elevators not in operation:</Text>
             <FlatList
                 data={elevators}
                 renderItem={renderItem}
@@ -143,7 +143,9 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 25,
-        marginLeft: 10
+        marginLeft: 40,
+        fontWeight: "bold"
+
     },
 
     styleBtnLogout: {

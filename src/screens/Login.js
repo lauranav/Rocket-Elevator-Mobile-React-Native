@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
 
 
         try {
-            const res = await axios.get(`https://4a00-24-200-220-70.ngrok.io/api/Employee/GetUserByEmail`, {
+            const res = await axios.get(`https://60c0-24-200-220-70.ngrok.io/api/Employee/GetUserByEmail`, {
                 params: {
                     email: email,
                 }
@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
     return (
         <View style={styles.container}>
 
-            <Image source={Logo} style={[styles.logo, { height: height * 0.3 }]} resizeMode="contain"></Image>
+            <Image source={Logo} style={{ height: height * 0.3 }} resizeMode="contain"></Image>
 
             <Text h3>LOG IN</Text>
             <Input
@@ -101,9 +101,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    logo: {
-        width: '70%',
-        maxWidth: 300,
-        maxHeight: 180,
-    }
+
 });

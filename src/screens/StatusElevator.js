@@ -21,7 +21,7 @@ export default function StatusElevator({ route, navigation }) {
 
             // console.log("id.elevator: ", id);
 
-            const res = await axios.post(`https://4a00-24-200-220-70.ngrok.io/api/Elevator/UpdateStatusElevatorById`, {
+            const res = await axios.post(`https://60c0-24-200-220-70.ngrok.io/api/Elevator/UpdateStatusElevatorById`, {
                 id: id,
                 status: "online",
                 headers: {
@@ -55,11 +55,11 @@ export default function StatusElevator({ route, navigation }) {
     return (
 
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>ID Elevator : {id}</Text>
-            <Text style={styles.title}>Status Elevator :<Text style={{ color: statusColor }}>{elevatorStatus}</Text></Text>
+            <Text style={styles.title}>Elevator ID : <Text style={{ fontWeight: '500' }} >{id}</Text></Text>
+            <Text style={styles.title}>Status : <Text style={{ color: statusColor }}>{elevatorStatus}</Text></Text>
             <View style={styles.styleBtnLogout}>
                 <Button
-                    title="UPDATE TO ONLINE"
+                    title="UPDATE STATUS"
                     buttonStyle={{
                         backgroundColor: '#0c64a3',
                         borderWidth: 2,
@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 25,
         marginLeft: 10,
+        fontWeight: '700'
     },
 
     styleBtnLogout: {
