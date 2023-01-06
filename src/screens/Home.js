@@ -22,7 +22,7 @@ export default function Home({ navigation }) {
 
         try {
             const res = await axios.get(
-                "https://4a00-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
+                "https://60c0-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
                 {
                     headers: { "Content-Type": "application/json" },
                 }

@@ -14,7 +14,7 @@ function MyStack() {
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="StatusElevator" component={StatusElevator} />
+      <Stack.Screen name="StatusElevator" component={StatusElevator} options={{ title: 'Elevator Status' }} />
     </Stack.Navigator>
   );
 }
