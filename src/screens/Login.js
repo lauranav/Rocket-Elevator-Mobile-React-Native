@@ -1,23 +1,60 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import { StyleSheet, View, Image, useWindowDimensions } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
-import Logo from '../../assets/images/logo.jpg'
+import Logo from '../../assets/images/logo.jpg';
+import validator from 'validator';
 
 
 export default function Login({ navigation }) {
-
     const [email, SetEmail] = useState(null)
-    const [password, SetPassword = {}] = useState(null)
-    const entrar = () => {
-        navigation.reset({
-            index: 0,
-            routes: [{ name: "Home" }]
-        })
+    const [error, setErrorEmail] = useState(null)
+
+    // const validate = () => {
+    //     setErrorEmail("Email invalid")
+    //     return false
+    // }
+
+    const authenticateUser = async () => {
+
+        setErrorEmail(null);
+
+
+        if (!validator.isEmail(email)) {
+            setErrorEmail('This not a valid email')
+            return;
+        }
+
+
+        try {
+            const res = await axios.get(`https://6e95-24-200-220-70.ngrok.io/api/Employee/GetUserByEmail`, {
+                params: {
+                    email: email,
+                }
+            }
+
+            );
+
+            if (res.data) {
+                navigation.navigate('Home')
+            }
+
+            else {
+                setErrorEmail('invalid email')
+            }
+
+            console.log("authenticateUser res:", res.data);
+
+        } catch (error) {
+            console.warn("authenticateUser error:", error);
+            setErrorEmail('An error occurried while checking the email')
+        }
+
+
+
     }
 
-    const register = () => {
-        navigation.navigate("Checkin")
-    }
+
 
     const { height } = useWindowDimensions();
 
@@ -30,40 +67,19 @@ export default function Login({ navigation }) {
             <Input
                 placeholder="E-mail"
                 leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-                onChangeText={value => SetEmail(value)}
+                onChangeText={(text) => SetEmail(text)}
+                // {value => SetEmail(value)}
                 keyboardType="email-address"
-            />
-            <Input
-                placeholder="Password"
-                leftIcon={{ type: 'font-awesome', name: 'lock' }}
-                onChangeText={value => SetPassword(value)}
-                secureTextEntry={true}
+                value={email}
             />
 
             <Button
                 title="LOG IN"
-                onPress={() => entrar()}
+                onPress={authenticateUser}
                 buttonStyle={{
-                    backgroundColor: 'black',
+                    backgroundColor: '#0c64a3',
                     borderWidth: 2,
-                    borderColor: 'white',
-                    borderRadius: 30,
-                }}
-                containerStyle={{
-                    width: 200,
-                    marginHorizontal: 50,
-                    marginVertical: 10,
-                }}
-                titleStyle={{ fontWeight: 'bold' }}
-            />
-
-            <Button
-                title="REGISTER"
-                onPress={() => register()}
-                buttonStyle={{
-                    backgroundColor: 'black',
-                    borderWidth: 2,
-                    borderColor: 'white',
+                    borderColor: '#0c64a3',
                     borderRadius: 30,
                 }}
                 containerStyle={{

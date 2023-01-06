@@ -1,74 +1,136 @@
-import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { Text, Button } from 'react-native-elements';
+import { View, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import App from '../../App';
+import { ListItem } from 'react-native-elements';
 
-function Feed() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Feed!</Text>
-        </View>
+export default function Home({ navigation }) {
+
+    const getElevators = async (setElevators) => {
+        try {
+            const res = await axios.get(
+                "https://6e95-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
+                {
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+
+            console.log("res.data: ", res.data);
+
+            setElevators(res.data);
+        } catch (error) {
+            console.warn("[getElevators] error:", error);
+        }
+    };
+
+    const [elevators, setElevators] = useState(null);
+
+    useEffect(() => {
+        getElevators(setElevators);
+    }, []);
+
+    console.log("elevators: ", elevators);
+
+    const onElevatorPress = (elevator) => {
+        console.log("onElevatorPress elevator:", elevator.id);
+        navigation.navigate("StatusElevator", {
+            idElevator: elevator.id,
+            status: elevator.status
+        });
+    };
+
+    const renderItem = ({ item }) => (
+        <Item elevator={item} />
     );
-}
 
-function Profile() {
+    const Item = ({ elevator }) => {
+        console.log("id is:", elevator);
+
+        return (
+            <View style={styles.styleBtnFlatList}>
+                <Button
+                    title={elevator.id.toString()}
+                    onPress={() => onElevatorPress(elevator)}
+                    buttonStyle={{
+                        backgroundColor: '#0c64a3',
+                        borderWidth: 2,
+                        borderColor: '#0c64a3',
+                        borderRadius: 30,
+                    }}
+                    containerStyle={{
+                        width: 300,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                    }}
+                    titleStyle={{ fontWeight: 'bold' }}
+                />
+            </View>
+        );
+    };
+
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Profile!</Text>
-        </View>
-    );
-}
 
-function Notifications() {
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Notifications!</Text>
-        </View>
-    );
-}
-
-const Tab = createBottomTabNavigator();
-
-export default function Home() {
-    return (
-        <Tab.Navigator
-            initialRouteName="Feed"
-            screenOptions={{
-                tabBarActiveTintColor: '#e91e63',
-            }}
-        >
-            <Tab.Screen
-                name="Feed"
-                component={Feed}
-                options={{
-                    tabBarLabel: 'Home',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="home" color={color} size={size} />
-                    ),
-                }}
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Elevators not operation:</Text>
+            <FlatList
+                data={elevators}
+                renderItem={renderItem}
+            // keyExtractor={item => item.id}
             />
-            <Tab.Screen
-                name="Notifications"
-                component={Notifications}
-                options={{
-                    tabBarLabel: 'Updates',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="bell" color={color} size={size} />
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name="Profile"
-                component={Profile}
-                options={{
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons name="account" color={color} size={size} />
-                    ),
-                }}
-            />
-        </Tab.Navigator>
+            <View style={styles.styleBtnLogout}>
+                <Button
+                    title="LOG OUT"
+                    buttonStyle={{
+                        backgroundColor: '#A94545',
+                        borderWidth: 2,
+                        borderColor: '#A94545',
+                        borderRadius: 30,
+                    }}
+                    containerStyle={{
+                        width: 200,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                    }}
+                    titleStyle={{ fontWeight: 'bold' }}
+                // onPress={() => onElevatorPress(elevator)}
+                />
+            </View>
+        </SafeAreaView>
     );
+
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 40,
+        paddingHorizontal: 20,
+    },
+
+    item: {
+        marginTop: 20,
+        marginBottom: 20,
+        padding: 30,
+        backgroundColor: '#C0392B',
+        fontSize: 30
+    },
+
+    styleBtnFlatList: {
+        marginTop: 15,
+        display: "flex",
+        alignItems: "center"
+    },
+
+    title: {
+        fontSize: 25,
+        marginLeft: 10
+    },
+
+    styleBtnLogout: {
+        marginTop: 50,
+        display: "flex",
+        alignItems: "center"
+    },
+});
