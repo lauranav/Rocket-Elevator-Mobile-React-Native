@@ -1,22 +1,62 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from "axios";
 import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 
 export default function StatusElevator({ route, navigation }) {
 
-    const { idElevator, status } = route.params;
+    const { id, currentStatus } = route.params;
     console.log("route.params: ", route.params);
 
     const onReturnPress = () => {
         navigation.navigate("Home");
     };
 
+    const [elevatorStatus, setElevatorStatus] = useState(currentStatus);
+
+
+    const onChangeStatusElevators = async () => {
+        try {
+
+
+            // console.log("id.elevator: ", id);
+
+            const res = await axios.post(`https://4a00-24-200-220-70.ngrok.io/api/Elevator/UpdateStatusElevatorById`, {
+                id: id,
+                status: "online",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            }).then(function () {
+                console.log("response.data: ", 1);
+
+                setElevatorStatus("online");
+
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log("error.response: ", error.response);
+                } else if (error.request) {
+                    console.log("error.request: ", error.request);
+                } else if (error.message) {
+                    console.log("error.message: ", error.message);
+                }
+
+            });
+
+        } catch (elev) {
+            console.warn("change status elev:", elev);
+        }
+    };
+
+    const statusColor = elevatorStatus === "offline" ? "red" : "green";
+
+
 
     return (
 
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>ID Elevator : {idElevator}</Text>
-            <Text style={styles.title}>Status Elevator : {status}</Text>
+            <Text style={styles.title}>ID Elevator : {id}</Text>
+            <Text style={styles.title}>Status Elevator :<Text style={{ color: statusColor }}>{elevatorStatus}</Text></Text>
             <View style={styles.styleBtnLogout}>
                 <Button
                     title="UPDATE TO ONLINE"
@@ -32,7 +72,7 @@ export default function StatusElevator({ route, navigation }) {
                         marginVertical: 10,
                     }}
                     titleStyle={{ fontWeight: 'bold' }}
-                // onPress={() => onElevatorPress(elevator)}
+                    onPress={() => onChangeStatusElevators()}
                 />
                 <Button
                     title="RETURN"

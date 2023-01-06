@@ -5,13 +5,30 @@ import { View, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import App from '../../App';
 import { ListItem } from 'react-native-elements';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home({ navigation }) {
 
+    useEffect(() => {
+        const focusHandler = navigation.addListener('focus', () => {
+            getElevators();
+        });
+        return focusHandler;
+    }, [navigation]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log("home screen is currently visible!");
+
+            getElevators(setElevators);
+        }, [])
+    );
+
     const getElevators = async (setElevators) => {
+
         try {
             const res = await axios.get(
-                "https://6e95-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
+                "https://4a00-24-200-220-70.ngrok.io/api/Elevator/GetAllElevatorStatusNotOperation",
                 {
                     headers: { "Content-Type": "application/json" },
                 }
@@ -31,19 +48,26 @@ export default function Home({ navigation }) {
         getElevators(setElevators);
     }, []);
 
+
+
+
     console.log("elevators: ", elevators);
 
     const onElevatorPress = (elevator) => {
         console.log("onElevatorPress elevator:", elevator.id);
         navigation.navigate("StatusElevator", {
-            idElevator: elevator.id,
-            status: elevator.status
+            id: elevator.id,
+            currentStatus: elevator.status
         });
     };
 
     const renderItem = ({ item }) => (
         <Item elevator={item} />
     );
+
+    const Logout = () => {
+        navigation.navigate("Login");
+    };
 
     const Item = ({ elevator }) => {
         console.log("id is:", elevator);
@@ -94,7 +118,7 @@ export default function Home({ navigation }) {
                         marginVertical: 10,
                     }}
                     titleStyle={{ fontWeight: 'bold' }}
-                // onPress={() => onElevatorPress(elevator)}
+                    onPress={() => Logout()}
                 />
             </View>
         </SafeAreaView>
