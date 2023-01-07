@@ -8,9 +8,6 @@ To develop this application, we are going to use React-Native Expo. In visual st
 To view the application from your cell phone, you must run your app and run the command (npm start) in the terminal. Then you must install Expo Go on your cell phone and using the barcode that appears on the terminal you can access your app.
 In this project I used React Native Elements which is a styling library (https://reactnativeelements.com/docs/2.3.2/getting_started#step-1-install-react-native-elements). I also installed react-native-vector-icons (https://reactnativeelements.com/docs/2.3.2/getting_started).
 
-## Start App
-On the Login page to be able to validate the email you can install the Validator.js library: https://www.npmjs.com/package/validator
-
 ## Starting a local web service
 ngrok is the fastest way to host your service on the Internet. ngrok gives you a secure way to access your local service from anywhere in the world. To install it and learn how to use it, follow the documentation: https://ngrok.com/download
 
@@ -28,6 +25,7 @@ That url expires in about 2 hours so you should check and ask for a new one.
  
 ## Connecting to the Rest Api
 To connect to the Rest API and make requests, I used the Axios library: https://www.nicesnippets.com/blog/how-to-use-axios-get-request-in-react-native
+
 ![image](https://user-images.githubusercontent.com/113923422/211120531-994d2c30-9f9d-461e-91ad-34428087861e.png)
 
 ## Create FlatList
