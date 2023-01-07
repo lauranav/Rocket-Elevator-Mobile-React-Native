@@ -27,7 +27,7 @@ export default function Login({ navigation }) {
 
 
         try {
-            const res = await axios.get(`https://60c0-24-200-220-70.ngrok.io/api/Employee/GetUserByEmail`, {
+            const res = await axios.get(`https://7ca8-24-200-220-70.ngrok.io/api/Employee/GetUserByEmail`, {
                 params: {
                     email: email,
                 }
