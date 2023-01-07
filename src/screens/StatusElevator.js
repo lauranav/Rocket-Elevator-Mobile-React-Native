@@ -21,7 +21,7 @@ export default function StatusElevator({ route, navigation }) {
 
             // console.log("id.elevator: ", id);
 
-            const res = await axios.post(`https://60c0-24-200-220-70.ngrok.io/api/Elevator/UpdateStatusElevatorById`, {
+            const res = await axios.post(`https://7ca8-24-200-220-70.ngrok.io/api/Elevator/UpdateStatusElevatorById`, {
                 id: id,
                 status: "online",
                 headers: {
